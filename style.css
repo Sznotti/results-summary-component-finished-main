@@ -1,0 +1,219 @@
+/* reset */
+*, *::before, *::after {
+	box-sizing: border-box;
+}
+
+* {
+	margin: 0;
+	font: inherit;
+}
+
+img, picture, svg {
+	display: block;
+	max-width: 100%;
+}
+
+/* load font from assets */
+@font-face {
+	font-family: "Hanken Grotesk";
+	src: url("assets/fonts/HankenGrotesk-VariableFont_wght.ttf") format('truetype');
+	font-display: swap; /* for performance */
+	font-weight: 100 900; /* because its a variable font */
+}
+
+/* custom variables used in this example */
+:root {
+	--clr-hsl-red: 0, 100%, 67%;
+	--clr-hsl-yellow: 39, 100%, 56%;
+	--clr-hsl-green: 166, 100%, 37%;
+	--clr-hsl-blue: 234, 85%, 45%;
+
+	--clr-primary-red-pale: hsl(var(--clr-hsl-red), 0.1);
+	--clr-primary-yellow-pale: hsl(var(--clr-hsl-yellow), 0.1);
+	--clr-primary-green-pale: hsl(var(--clr-hsl-green), 0.1);
+	--clr-primary-blue-pale: hsl(var(--clr-hsl-blue), 0.1);
+
+	--clr-neutral-hsl-100: 0, 0%, 100%;
+	--clr-neutral-hsl-200: 221, 100%, 96%;
+	--clr-neutral-hsl-300: 241, 100%, 89%;
+	--clr-neutral-hsl-700: 224, 30%, 27%;
+
+	--clr-neutral-100: hsl(var(--clr-neutral-hsl-100));
+	--clr-neutral-200: hsl(var(--clr-neutral-hsl-200));
+	--clr-neutral-300: hsl(var(--clr-neutral-hsl-300));
+	--clr-neutral-700: hsl(var(--clr-neutral-hsl-700));
+
+	--gradient-background-transparent: hsl(0, 0, 0, 0);
+
+	--gradient-violet-start: hsl(252, 100%, 67%);
+	--gradient-violet-end: hsl(241, 81%, 54%);
+	--gradient-background: linear-gradient(to bottom, var(--gradient-violet-start), var(--gradient-violet-end));
+
+	--gradient-blue-start: hsla(256, 72%, 46%, 1);
+	--gradient-blue-end: hsla(241, 72%, 46%, 0);
+	--gradient-circle: linear-gradient(to bottom, var(--gradient-blue-start), var(--gradient-blue-end));
+
+	--ff-default: 'Hanken Grotesk', sans-serif;
+
+	--fs-default: 18px;
+	--fs-medium: 1.3rem;
+	--fs-large: 2rem;
+	--fs-extra-large: 5rem;
+
+	--fw-regular: 500;
+	--fw-bold: 700;
+	--fw-bolder: 800;
+
+	--content-gap: 1rem;
+	--content-gap-large: 2rem;
+	--border-radious: 1.6rem;
+}
+
+/* syling */
+body {
+	font-family: var(--ff-default);
+	font-size: var(--fs-default);
+	color: var(--clr-neutral-700);
+
+}
+@media (min-width: 600px) {
+	body {
+		min-height: 100dvh;
+		display: grid;
+		place-items: center;
+	}
+}
+
+#container {
+	--padding: 2rem;
+
+	display: grid;
+
+	max-width: 42rem;
+	overflow: hidden;
+	box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+@media (min-width: 600px) { /* at lrager screen sizes we want two columns */
+	#container {
+		grid-template-columns: 1fr 1fr;
+		border-radius: var(--border-radious);
+	}
+}
+
+button {
+	padding: .8rem 1.6rem;
+	border: none;
+	border-radius: 100vw; /* gigantic number to ensure pill-shaped button */
+	outline: none;
+	background-color: var(--clr-neutral-700);
+	color: var(--clr-neutral-100);
+	font-weight: var(--fw-bold);
+	font-size: var(--fs-default);
+	cursor: pointer;
+}
+button:is(:hover, :focus) {
+	background-image: var(--gradient-background);
+}
+
+.grid-flow {
+	display: grid;
+	align-content: start; /* grid wants to stretch, but now we don't want that */
+	gap: 1rem; /* don't use custom properties, bc the children will inherit it and can impact the layout */
+}
+
+.grid-flow[data-spacing="large"] {
+	gap: 2rem;
+}
+
+.icon-text {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+}
+
+.section-title {
+	font-size: var(--fs-medium);
+	font-weight: var(--fw-bold);
+}
+
+.results-container {
+	background-image: var(--gradient-background);
+	color: hsl(var(--clr-neutral-hsl-100), 0.6);
+	text-align: center;
+	padding: var(--padding) calc(var(--padding) * 1.5) calc(var(--padding) * 1.5);
+	border-radius: 0 0 var(--border-radious) var(--border-radious);
+}
+@media (min-width: 600px) {
+	.results-container {
+		border-radius: var(--border-radious);
+	}
+}
+
+.result-rank {
+	color: var(--clr-neutral-100);
+	font-size: var(--fs-large);
+	font-weight: var(--fw-bold);
+}
+
+.result-score {
+	display: grid;
+	place-content: center;
+
+	background-image: var(--gradient-circle);
+	margin-inline: auto; /* center horizontally whitin the space it has */
+	/* for the perfect circle */
+	width: 12rem;
+	border-radius: 50%;
+	aspect-ratio: 1 / 1;
+}
+.result-score span {
+	color: var(--clr-neutral-100);
+	font-size: var(--fs-extra-large);
+	font-weight: var(--fw-bolder);
+
+	line-height: 1;
+	display: block;
+}
+
+.summary-container {
+	padding: var(--padding);
+}
+
+.summary-item {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	border-radius: 0.5rem;
+	padding: 1rem;
+	/* background-color: lightblue; */
+	background-color: hsl(var(--item-color), 0.1);
+}
+.summary-item svg {
+	/* stroke: red; */
+	stroke: hsl(var(--item-color));
+}
+.summary-item .item-title {
+	color: hsl(var(--item-color));
+	font-weight: var(--fw-bold);
+}
+
+.summary-item[data-item-type="accent-1"] {
+	--item-color: var(--clr-hsl-red);
+}
+.summary-item[data-item-type="accent-2"] {
+	--item-color: var(--clr-hsl-yellow);
+}
+.summary-item[data-item-type="accent-3"] {
+	--item-color: var(--clr-hsl-green);
+}
+.summary-item[data-item-type="accent-4"] {
+	--item-color: var(--clr-hsl-blue);
+}
+
+.summary-score {
+	color: hsl(var(--clr-neutral-hsl-700), 0.5);
+	font-weight: var(--fw-bold);
+}
+.summary-score span {
+	color: var(--clr-neutral-700);
+}
